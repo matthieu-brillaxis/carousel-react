@@ -1,25 +1,54 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import SimpleCarousel from './components/carousel/SimpleCarousel';
 import './App.css';
+import arbitre from './assets/arbitre.jpg';
+import benevole from './assets/benevole.jpg';
+import card from './assets/card.jpg';
+import jeu from './assets/jeu.jpg';
+import entraineur from './assets/entraineur.jpg';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showCarousel: false,
+    };
+  }
+
+  handleToggleModal = () => {
+    this.setState((prevState) => ({ 
+      showCarousel: !prevState.showCarousel 
+    }));
+  }
+
   render() {
+    const { showCarousel } = this.state;
+    const data = [
+      arbitre,
+      jeu,
+      entraineur,
+      card,
+      benevole
+    ];
+    
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div>
+        <button
+          type="button"
+          className='modalButton'
+          onClick={this.handleToggleModal}
+        >
+          Open Modal
+        </button>
+
+        {showCarousel &&
+          <SimpleCarousel 
+            onCloseRequest={this.handleToggleModal} 
+            data={data}
+          />}
+        </div>
       </div>
     );
   }
